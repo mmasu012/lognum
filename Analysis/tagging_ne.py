@@ -13,7 +13,8 @@ Created on Mon Dec 20 16:21:16 2021
 import pandas as pd
 from geotext import GeoText
 
-df = pd.read_csv('re_chunkification_social_output.csv')
+df = pd.read_csv('re_chunkification_output.csv')
+# df = pd.read_csv('re_chunkification_social_output.csv')
 
 # print(df['numbers'].describe())
 # print(df['numbers'].value_counts().idxmax())
@@ -46,7 +47,7 @@ df = pd.read_csv('re_chunkification_social_output.csv')
 # print(len(countries))
 
 
-# # ################### Malware Terms
+# ################### Malware Terms
 # keywords=['Adware',
 #           'DDoS','Exploit','Hack','Monitoring', 'Malware', 'botnet',
 #           'Ransom','RemoteAccess', 'Ransomware', 'Spam', 'Spoof',
@@ -61,6 +62,8 @@ df = pd.read_csv('re_chunkification_social_output.csv')
 
 # iter=0
 # hack_terms={}
+# usernames=[]
+# forum_names={}
 # for i, row in df.iterrows():
     
 #     chunks = str(row['all_meaningful_chunks']).split(',')
@@ -71,15 +74,24 @@ df = pd.read_csv('re_chunkification_social_output.csv')
     
 #     for chunk in chunks:
 #         if chunk in keywords:
-#             print(username, forum, chunk)
+#             # print(username, forum, chunk)
+#             usernames.append(username)
 #             iter+=1
 #             if chunk not in hack_terms:
 #                 hack_terms[chunk]=1
 #             else:
 #                 hack_terms[chunk]+=1
+                
+            
+#             if forum not in forum_names:
+#                 forum_names[forum]=1
+#             else:
+#                 forum_names[forum]+=1
 
 # print(iter)
+# print(len(usernames))
 # print(hack_terms.items())
+# print(forum_names.items())
 
 # # does numerics mean valid year
 # def valid_year(year):
@@ -146,29 +158,66 @@ df = pd.read_csv('re_chunkification_social_output.csv')
 # hist.set_ylabel("frequency")
 
 # # how many slangification
-print(df[df['is_transformed'] == True].shape[0])
-import enchant
-d = enchant.Dict("en_US")
+# print(df[df['is_transformed'] == True].shape[0])
+# import enchant
+# d = enchant.Dict("en_US")
 
-iter=0
-for i, row in df.iterrows():
+# iter=0
+# for i, row in df.iterrows():
     
-    if row['is_transformed']:
-        chunks = str(row['meaningful_chunks']).split(',')
-        transformed_chunks = str(row['transformed_meaningful_chunks']).split(',')
-        username = row['username']
-        # print(chunks)
+#     if row['is_transformed']:
+#         chunks = str(row['meaningful_chunks']).split(',')
+#         transformed_chunks = str(row['transformed_meaningful_chunks']).split(',')
+#         username = row['username']
+#         # print(chunks)
       
-        for transformed_chunk in transformed_chunks:
+#         for transformed_chunk in transformed_chunks:
             
-            if d.check(transformed_chunk) and transformed_chunk not in chunks:
+#             if d.check(transformed_chunk) and transformed_chunk not in chunks:
             
-                iter+=1
+#                 iter+=1
                 
-                # print(username, chunks, transformed_chunks)
-                break
+#                 # print(username, chunks, transformed_chunks)
+#                 break
 
-print(iter)
+# print(iter)
+
+
+# # ################### Seller terms
+# keywords=['selling', 'promote',
+#           'sell','seller','buy','buyer','buying',
+#           'crime','criminal']
+
+# keywords=['porn',
+#     # 'haunter',
+#     # 'cyber'
+#     ]
+
+# for iter, keyword in enumerate(keywords):
+    
+#     keywords[iter]=keywords[iter].lower()
+
+# iter=0
+# hack_terms={}
+# for i, row in df.iterrows():
+    
+#     chunks = str(row['all_meaningful_chunks']).split(',')
+#     username = row['username']
+#     forum = row['forum_name']
+    
+#     # print(chunks)
+    
+#     for chunk in chunks:
+#         if chunk in keywords:
+#             print(username, forum, chunk)
+#             iter+=1
+#             if chunk not in hack_terms:
+#                 hack_terms[chunk]=1
+#             else:
+#                 hack_terms[chunk]+=1
+
+# print(iter)
+# print(hack_terms.items())
 
 
 # print(str(df['meaningful_chunks']).split(','))

@@ -302,6 +302,75 @@ def get_stop_char_score(l1, l2, u_1, u_2):
         
     
     return 0
+
+
+def get_stop_char_score_partial(l1, l2, u_1, u_2):
+    
+    l1.sort()
+    l2.sort()
+    
+    len_l1 = len(l1)
+    len_l2 = len(l2)
+    if len_l1 > 0 and len_l2 > 0:
+    
+        l1, l2 = (l1,l2) if len_l1 > len_l2 else (l2,l1)
+        
+        s2 = ""
+        for c2 in l2:
+            s2 += c2
+    
+    else:
+        l1, l2, s2 = (l1,l2,u_2) if len_l1 > 0 else (l2,l1, u_1)
+    
+    match_1 = 0
+    temp = []
+    for c1 in l1:
+        
+        if c1 in s2:
+            s2 = s2.replace(c1, '')
+            match_1 += 1
+        else:
+            temp.append(c1)
+    
+    if len(l1) == match_1 and len(s2) == 0:
+        return 1
+    elif len(s2) == 0 and match_1 >= 1:
+        return round(1 - (match_1 / len(l1)), 2)
+    elif len(s2) != 0 and len(l1) != match_1:
+        l1 = temp
+        temp_s = s2
+        match = 0
+        # characterwise
+        # print(l1, s2[-1])
+        for c1 in l1:
+            
+            if c1[0] == temp_s[0] or c1[0] == temp_s[-1]:
+                temp_s=temp_s.replace(c1[0], '')
+                match += 1
+        if len(l1) == match or len(temp_s) == 0:
+            return 1
+         
+        
+    return 0
+        
+            
+            
+            
+            # l1 = temp
+            # temp_s = s2
+            # match = 0
+            # # characterwise
+            # # print(l1, s2[-1])
+            # for c1 in l1:
+                
+            #     if c1[0] == temp_s[0] or c1[0] == temp_s[-1]:
+            #         temp_s=temp_s.replace(c1[0], '')
+            #         match += 1
+            # if len(l1) == match or len(temp_s) == 0:
+            #     return 1
+        
+    
+    # return 0
     
     
 
@@ -402,8 +471,8 @@ def find_matching_score(u_1, u_2, write=True):
                 print(score)
             if write:
                 with open('chunks.csv', 'a') as fp:                                
-                    fp.write(u_1 + ',' + '-'.join(c1) + ',' + \
-                                 u_2 + ',' + '-'.join(c2) + ',' + str(score) + '\n')
+                    fp.write(u_1 + ',' + \
+                                 u_2 + ','  + str(score) + '\n')
  
         
         # numeric_score = \
@@ -503,7 +572,11 @@ def main():
         u_f = record[FACEBOOK]
         u_t = record[TWITTER]
         
-        if '.' in u_f:
+        if '.' in u_f or '@' in u_f or '_' in u_f:
+            # print(u_f, u_t)
+            
+            find_matching_score(u_f, u_t)
+        elif '.' in u_t or '@' in u_t or '_' in u_t:
             # print(u_f, u_t)
             
             find_matching_score(u_f, u_t)

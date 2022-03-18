@@ -114,8 +114,8 @@ def main():
     
 # main()
 
-start=re.findall('^\d+','ab')[0]
-print(start)
+# start=re.findall('^\d+','ab')[0]
+# print(start)
 
 # end=re.findall('\d+$','12a3b2')[0]
 # print(end)
@@ -128,7 +128,9 @@ print(start)
 # username = re.sub(r'^[0-9]{1,}', '', '12a300b410c520d13')
 # username = re.sub(r'[0-9]{1,}$', '', username)
 
-# print(re.findall('\d+', username))
+print(re.findall('\d+', '12ma1sud12'))
+print(re.findall('\d+', '12ma1sud123'))
+print(re.findall('\d+', '1ma1sud2'))
 
 
 
